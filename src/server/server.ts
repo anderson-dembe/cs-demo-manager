@@ -77,6 +77,8 @@ class WebSocketServer {
   private createServer(port: number, onListening: (port: number) => void) {
     this.server = new WSServer({
       port,
+      // CS Coach runs every client on the recorder itself; no LAN listener is needed.
+      host: '127.0.0.1',
     });
 
     this.server.on('listening', () => {
