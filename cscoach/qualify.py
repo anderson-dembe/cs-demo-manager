@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, r"C:\cscoach\clips")
@@ -16,6 +17,7 @@ ROOT = Path(r"C:\cscoach\csdm-qualification-20261112")
 BUILD = Path(__file__).resolve().parents[1] / "dist" / "win-unpacked"
 PROFILE = ROOT / "profile"
 DATABASE = "csdm_cscoach_20261112"
+RUN_ID = datetime.now().strftime("%Y%m%d%H%M%S")
 ROOT.mkdir(exist_ok=True)
 
 
@@ -88,7 +90,7 @@ def main():
                  "recordings": []}
         for orientation in ("horizontal", "vertical"):
             width, height, seqs = worker.resolucao_e_sequencias(orientation, sequences)
-            folder = output / orientation
+            folder = output / f"{orientation}-{RUN_ID}"
             folder.mkdir(exist_ok=True)
             config = {"demoPath": str(demo), "width": width, "height": height, "framerate": 60,
                       "recordingSystem": "HLAE", "recordingOutput": "video", "encoderSoftware": "FFmpeg",
